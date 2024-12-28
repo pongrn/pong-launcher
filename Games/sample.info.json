@@ -1,0 +1,24 @@
+{
+    "name": "Nome",
+    "coverCardPath": "JogoCover.jpg",
+    "executablePath": "Jogo.exe",
+    "studiosName": "Studio 1, Studio 2",
+    "publishersName": "Studio 1, Publisher 1",
+    "bgColor": "#fcba03",
+    "textColor": "#fcba03",
+    "bgCoverPath": "JogoBg.jpg",
+    "description": [
+        "Aqui vai a descrição do jogo.",
+        "Cada elemento da lista será um elemento diferente."
+    ]
+    ,
+    "screenshotsPaths": [
+        "ss1.jpg",
+        "ss2.jpg"
+    ],
+    "twitterHandle": "@x",
+    "bskyHandle":"@bsky.app",
+    "instagramHandle": "@instagram",
+    "tiktokHandle":"@tiktok",
+    "website": "pongrn.com.br"
+}
