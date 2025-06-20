@@ -45,8 +45,13 @@ export function LoadGames() {
             const game: GameInfo = JSON.parse(info)
 
             game.coverCardStream = fs.readFileSync(GetFullPath(f + "/" + game.coverCardPath)).toString("base64");
+            game.bgCoverStream = fs.readFileSync(GetFullPath(f + "/" + game.bgCoverPath)).toString("base64");
 
             game.fullExecutablePath = GetFullPath(f + "/" + game.executablePath)
+
+            game.screenshotsStreams = game.screenshotsPaths.map((s) => {
+                return fs.readFileSync(GetFullPath(f + "/" + s)).toString("base64")
+            })
 
             result.push(game)
             console.log("Game loaded: " + game.name + " by " + game.studiosName)

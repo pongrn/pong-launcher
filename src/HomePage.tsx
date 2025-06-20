@@ -1,13 +1,17 @@
 import { ipcRenderer, IpcRendererEvent } from "electron";
-import React, { JSX, useState } from "react";
+import React, { createContext, JSX, useEffect, useState } from "react";
 import { loadGames, loadGamesResponse } from "./constants/ipcChannels";
 import { GameInfo } from "./helpers/loadingFunctions";
 import { GameListing } from "./components/GameListing";
+import GamePage from "./components/GamePage";
+
+export const StartGameContext = createContext(() => {})
 
 export function HomePage(){
     const [gameList, setGameList] = useState<GameInfo[]>([])
+    const [currentGame, setCurrentGame] = useState(0)
 
-    let currentGame = 0;
+    console.log(currentGame)
     
     function SetupState(games: any)
     {
@@ -27,13 +31,12 @@ export function HomePage(){
         </div>)
     }
 
-    let components = gameList.map((game) => {
-        return (<GameListing cardStream={game.coverCardStream} name={game.name} />)
+    let components = gameList.map((game, index) => {
+        return (<GameListing cardStream={game.coverCardStream} name={game.name} onClick={() => setCurrentGame(index)} />)
     });
 
-    let descriptionComponents = gameList[currentGame].description.map((d) => {
-        return (<p>{d}</p>);
-    })
+    let currentGamePage = 
+    <GamePage game={gameList[currentGame]}/>
 
     function StartGame() //TODO: use something to manage game switching i.e Redux, useContext etc
     {
@@ -41,15 +44,16 @@ export function HomePage(){
     }
     
     return (
-        <div style={{marginTop: 0, marginLeft: "2vw", display: "flex", justifyContent: "left", width: "auto", height: "100vh"}}>
-            <ul style={{margin: 0, padding: 0}}>
-                {components}
-            </ul>
-            <div style={{backgroundColor: gameList[currentGame].bgColor, height: "auto"}}>
-                {descriptionComponents}
-                <button style={{height: "2.5rem", width: "6rem", fontSize: "16px"}} onClick={StartGame}>Jogar</button>
+        <StartGameContext.Provider value={StartGame}>
+            <div style={{marginTop: 0, display: "flex", alignItems: "start", justifyContent: "left", width: "auto", backgroundColor: "#8d41df", overflow: "hiden"}}>
+                <ul style={{margin: 0, padding: 0, width: "20vw", height: "100vh", overflowX: "hidden", overflowY: "auto"}}>
+                    {components}
+                </ul>
+                <div>
+                    {currentGamePage}
+                </div>
             </div>
-        </div>
+        </StartGameContext.Provider>
     )
     
 }

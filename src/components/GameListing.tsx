@@ -1,6 +1,7 @@
 interface GameListingProps {
     name: string;
     cardStream: string;
+    onClick: () => void;
 }
 
 export function GameListing(props: GameListingProps)
@@ -12,8 +13,8 @@ export function GameListing(props: GameListingProps)
     }
 
     return (
-        <li style={{listStyleType: "none", cursor: "pointer"}} onClick={ChangeGame}>
-            <img src={"data:image/jpg;base64," + props.cardStream} style={{width: "50vh", height: "auto"}} />
+        <li style={{listStyleType: "none", cursor: "pointer"}} onClick={props.onClick}>
+            <img src={"data:image/jpg;base64," + props.cardStream} style={{width: "100%", height: "auto"}} />
         </li>
     )
 }
